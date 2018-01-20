@@ -12,4 +12,4 @@ add_executable(main
   MyParser.cpp
   analysis.cpp
 )
-target_link_libraries(main ${ANTLR_LIBRARIES})
+target_link_libraries(main antlr4_static)
