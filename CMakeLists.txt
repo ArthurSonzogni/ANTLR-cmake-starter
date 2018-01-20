@@ -7,12 +7,6 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 # ┌─────────────┐
 # │ ANTLR       │
 # └─────────────┘
-find_program (antlr antlr4)
-if (antlr)
-  message(STATUS "ANTLR4 (parser generator) found: " ${antlr})
-else()
-  message(FATAL_ERROR "ANTLR4 not found")
-endif()
 
 # Function
 #   ANTLR(INPUT <input> (DEPENDENCIES <dependencies>))
