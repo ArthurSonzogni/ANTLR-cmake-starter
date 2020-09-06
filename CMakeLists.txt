@@ -1,8 +1,8 @@
-cmake_minimum_required (VERSION 2.9)
-project(Diagon)
-
+cmake_minimum_required (VERSION 3.0)
+project(ANTLR_Starter
+  LANGUAGES CXX
+)
 set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 # ┌─────────────┐
 # │ ANTLR       │
@@ -50,10 +50,7 @@ function(ANTLR)
   set(output ${source_gen_dir}/${source_filename}.cpp)
 endfunction()
 
-# Build the ANTLR runtime.
-add_subdirectory(${CMAKE_SOURCE_DIR}/tools/antlr/cpp_runtime/)
-include_directories(${CMAKE_SOURCE_DIR}/tools/antlr/cpp_runtime/runtime/src)
-
-#-------------------------------------------------------------------------------
-
+SET(WITH_LIBCXX OFF CACHE BOOL "")
+add_subdirectory(${CMAKE_SOURCE_DIR}/tools/antlr/antlr4/runtime/Cpp/ EXCLUDE_FROM_ALL)
+include_directories(${CMAKE_SOURCE_DIR}/tools/antlr/antlr4/runtime/Cpp/runtime/src)
 add_subdirectory(src)

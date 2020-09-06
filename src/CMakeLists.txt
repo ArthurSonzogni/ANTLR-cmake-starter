@@ -12,4 +12,5 @@ add_executable(main
   MyParser.cpp
   analysis.cpp
 )
-target_link_libraries(main antlr4_static)
+target_link_libraries(main PRIVATE antlr4_static)
+set_property(TARGET main PROPERTY CXX_STANDARD 11)
