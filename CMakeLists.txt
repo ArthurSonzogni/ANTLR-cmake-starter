@@ -1,8 +1,35 @@
-cmake_minimum_required (VERSION 3.0)
+cmake_minimum_required (VERSION 3.5)
 project(ANTLR_Starter
   LANGUAGES CXX
 )
-set(CMAKE_CXX_STANDARD 11)
+include(FetchContent)
+
+# useful diagnostic/debug options
+# set(CMAKE_BUILD_TYPE "Debug" CACHE STRING "Build Type" FORCE)
+# set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS  "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
+# set(CMAKE_VERBOSE_MAKEFILE ON)
+
+set(ANTLR_VER 4.13.2)
+set(ANTLR_JAR_FILE antlr-${ANTLR_VER}-complete.jar)
+set(ANTLR_DOWNLOAD_URL "https://www.antlr.org/download/${ANTLR_JAR_FILE}")
+
+FetchContent_Declare(
+  antlr_jar
+  DOWNLOAD_NO_EXTRACT TRUE
+  URL  ${ANTLR_DOWNLOAD_URL}
+)
+FetchContent_MakeAvailable(antlr_jar)
+set(ANTLR_JAR_DIR ${FETCHCONTENT_BASE_DIR}/antlr_jar-src)
+
+FetchContent_Declare(
+  antlr_repo
+  GIT_REPOSITORY https://github.com/antlr/antlr4.git
+  DOWNLOAD_EXTRACT_TIMESTAMP true
+  GIT_SHALLOW 1
+  GIT_TAG  ${ANTLR_VER}
+)
+FetchContent_MakeAvailable(antlr_repo)
+set(ANTLR_REPO_DIR ${FETCHCONTENT_BASE_DIR}/antlr_repo-src)
 
 # ┌─────────────┐
 # │ ANTLR       │
@@ -40,7 +67,7 @@ function(ANTLR)
     COMMAND
       java
     ARGS
-      -jar ${CMAKE_SOURCE_DIR}/tools/antlr/antlr.jar
+      -jar ${ANTLR_JAR_DIR}/${ANTLR_JAR_FILE}
       -Dlanguage=Cpp
       -no-listener
       -no-visitor
@@ -51,6 +78,6 @@ function(ANTLR)
 endfunction()
 
 SET(WITH_LIBCXX OFF CACHE BOOL "")
-add_subdirectory(${CMAKE_SOURCE_DIR}/tools/antlr/antlr4/runtime/Cpp/ EXCLUDE_FROM_ALL)
-include_directories(${CMAKE_SOURCE_DIR}/tools/antlr/antlr4/runtime/Cpp/runtime/src)
+add_subdirectory(${ANTLR_REPO_DIR}/runtime/Cpp/ EXCLUDE_FROM_ALL)
+include_directories(${ANTLR_REPO_DIR}/runtime/Cpp/)
 add_subdirectory(src)
