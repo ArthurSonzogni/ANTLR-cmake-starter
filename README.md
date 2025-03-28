@@ -4,18 +4,15 @@
 
 A ready to use starter project using ANTLR with cmake.
 
-There are no dependencies. The script `/tools/antlr/download.sh` will
-download ANTLR and it will be used as a CMake dependency.
+There are no dependencies: 
+- ANTLR jar and the 
+- ANTLR git repo (for the ANTLR c++ run-time)   
+
+will be downloaded automatically.
 
 ## Instructions
 
 ```bash
-
-# Download ANTLR and build the CPP runtime.
-cd tools/antlr
-./download.sh
-cd ../..
-
 # Build the project
 mkdir build
 cd build
